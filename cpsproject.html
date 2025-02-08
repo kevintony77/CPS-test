@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .clickBox,
+        .playStart {
+            background-color: black;
+            width: 90%;
+            height: 85%;
+            margin-bottom: 10px;
+            border-radius: 20px;
+            margin: auto;
+            position: relative;
+            flex: 1;
+        }
+
+        .numberOfClicks,
+        .timerDiv {
+            display: inline-block;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            /* Full width */
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.667);
+            /* Black w/ opacity */
+        }
+
+        .modalC {
+            background-color: white;
+            margin: auto;
+            padding: 10px;
+            border: solid;
+            border-width: 1px;
+            border-color: black;
+            width: 70%;
+            position: relative;
+            height: 60%;
+            background-color: rgb(15, 15, 17);
+            box-shadow: 0px 0px 10px #000000b0;
+            border-radius: 30px;
+        }
+
+        .close {
+            color: #ffffff;
+            text-decoration: none;
+            cursor: pointer;
+
+        }
+
+        .close {
+            position: absolute;
+            top: 1vh;
+            right: 2vw;
+            font-size: 40px;
+            user-select: none;
+        }
+
+        .sidebar {
+            background-image: linear-gradient(to top right, rgb(157, 255, 0), rgb(255, 191, 0));
+            width: 18vw;
+            min-width: 200px;
+            margin-right: 10px;
+            position: fixed;
+            top: 70px;
+            left: 0;
+            height: 100%;
+
+        }
+
+        body {
+            padding-left: max(20vw, 200px);
+            background-color: #1b1b1bfb;
+
+        }
+
+        .container {
+            width: 50vw;
+            background-color: rgb(39, 39, 39);
+            height: 440px;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+
+
+        }
+
+        .numberOfClicks,
+        .timerDiv,
+        .highScore {
+            padding: 10px;
+            font-size: 30px;
+            background-image: linear-gradient(to top right, rgb(157, 255, 0), rgb(255, 191, 0));
+            flex: 1;
+            max-width: 20%;
+            margin-right: 10px;
+            font-family: 'Arial';
+            border-radius: 20px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+
+
+
+
+        }
+
+        .divFlex {
+            display: flex;
+            margin-bottom: 0px;
+            justify-content: center;
+            border-bottom-width: 5px;
+            border-bottom-style: solid;
+            border-bottom-color: #1b1b1bfb;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            padding-top: 100px;
+            box-shadow: 15px 0px 15px rgba(0, 0, 0, 0.34);
+
+
+
+
+        }
+
+        .modeButton {
+            width: 90%;
+            height: 35px;
+            margin-bottom: 10px;
+            background-color: #1b1b1bfb;
+            border: none;
+            border-radius: 10px;
+            flex-shrink: 0;
+            margin-left: 10px;
+            font-size: 20px;
+            color: rgb(255, 225, 0);
+            box-shadow: 0px 0px 4px black inset;
+            transition: background-color 0.3s;
+
+
+
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: max(18vw, 200px);
+            right: 0;
+            background-color: red;
+            height: 70px;
+            background-image: linear-gradient(to bottom left, rgb(255, 251, 0), orange);
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.388);
+
+        }
+
+        body {
+            padding-top: 90px;
+
+        }
+
+        .header2 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 70px;
+            background-color: rgb(31, 31, 31);
+            width: max(18vw, 200px);
+            font-size: 30px;
+            color: rgb(255, 221, 0);
+            text-align: center;
+            padding-top: 15px;
+
+
+        }
+
+        .modeButton:hover {
+            background-color: rgb(46, 46, 46);
+            cursor: pointer;
+
+
+        }
+
+
+
+        .clickStartText {
+            color: white;
+            position: absolute;
+            font-family: 'Arial';
+            top: 45%;
+            left: 40%;
+            z-index: 100000;
+            text-align: center;
+            user-select: none;
+        }
+
+        .modalClicks {
+            font-size: 40px;
+            color: rgb(255, 204, 0);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Arial';
+            user-select: none;
+
+        }
+
+        .row2 {
+            display: flex;
+            width: 95%;
+            height: 500px;
+            margin: auto;
+            position: relative;
+        }
+
+        .playStart {
+            position: absolute;
+            color: rgba(156, 156, 156, 0.534);
+            font-family: 'Arial';
+            font-size: 20px;
+            text-align: center;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            align-content: center;
+            user-select: none;
+        }
+
+        .logButton {
+            width: 100px;
+            height: 30px;
+            font-family: 'Arial';
+            font-size: 15px;
+            background-color: rgb(31, 31, 31);
+            border-radius: 15px;
+            color: rgb(255, 208, 0);
+            border: none;
+
+        }
+
+        .title {
+            font-family: 'Arial';
+            color: rgb(31, 31, 31);
+            flex: 1;
+            justify-content: center;
+            display: flex;
+            font-weight: bolder;
+            min-width:200px;
+
+
+
+        }
+
+        .header {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .logDiv {
+            display: flex;
+            align-items: center;
+            justify-content: right;
+            width: 300px;
+            padding: 10px;
+
+
+        }
+
+        @media screen and (max-width:500px) {
+
+            .sidebar,
+            .header,
+            .header2 {
+                display: none;
+            }
+
+
+            body {
+                padding-left: 0px;
+            }
+
+            .container {
+                width: 90vw;
+                height: 70vh;
+            }
+
+        }
+    </style>
+</head>
+
+<body style="padding-bottom:3000px;">
+    <header>
+        <div class="header">
+            <div class="title">
+                <h1>CPS TEST</h1>
+            </div>
+            <div class="logDiv"><button class="logButton">Log In</button></div>
+        </div>
+        <div class="header2">
+            KevCo
+
+        </div>
+    </header>
+    <aside>
+        <div class="sidebar">
+            <a><button class="modeButton five">5 Seconds</button></a>
+            <a><button class="modeButton ten">10 Seconds</button></a>
+            <a><button class="modeButton thirty">30 Seconds</button></a>
+            <a><button class="modeButton sixty">60 Seconds</button></a>
+            <a><button class="modeButton"></button></a>
+            <a><button class="modeButton"></button></a>
+
+
+        </div>
+    </aside>
+    <div class="container jsContainer">
+        <div class="divFlex">
+            <div class="numberOfClicks jsNumberOfClicks">0</div>
+            <div class="timerDiv jsTimerDiv"></div>
+            <div class="highScore"></div>
+        </div>
+        <div class="row2">
+            <div class="playStart">Click to start</div>
+            <div class="clickBox jsClickBox"></div>
+        </div>
+
+    </div>
+
+    <div class="modal jsModal">
+        <div class="jsModalC modalC">
+            <span class="close">&times;</span>
+            <div class="jsModalClicks modalClicks"></div>
+        </div>
+    </div>
+
+
+    <script>
+        let highScore = JSON.parse(localStorage.getItem('highScore'));
+        const highScoreDisplay = document.querySelector('.highScore')
+        highScoreDisplay.innerText = highScore ? highScore : 0;
+        const ClickBox = document.querySelector('.jsClickBox');
+        const Modal = document.querySelector('.jsModal');
+        let ClickDisplay = document.querySelector('.jsNumberOfClicks');
+        const playStart = document.querySelector('.playStart');
+        let TimesClicked = 0;
+        let timer;
+        let e = 0;
+        let selectedTime = 10;
+        let timerDiv = document.querySelector('.jsTimerDiv');
+        timerDiv.innerText = 10;
+        timerDiv.style.userSelect = "none";
+        ClickDisplay.style.userSelect = "none";
+        document.querySelectorAll('.modeButton').forEach(button => {
+            button.addEventListener('click', function () {
+
+                const time = parseInt(this.innerText);
+                if (!isNaN(time)) {
+                    setTimer(time);
+                }
+            })
+
+        })
+
+
+        function setTimer(time) {
+            clearInterval(timer);
+            e = 0;
+            TimesClicked = 0;
+            ClickDisplay.innerText = TimesClicked;
+            selectedTime = time;
+            timerDiv.innerText = selectedTime;
+            resetGame();
+        }
+        playStart.addEventListener('click', StartPlaying);
+        ClickBox.addEventListener('click', boxClicked);
+        function StartPlaying() {
+            if (e === 0) {
+                startTimer()
+                playStart.style.display = 'none';
+            }
+        }
+        function boxClicked() {
+            if (e != 0) {
+                TimesClicked++;
+                ClickDisplay.innerText = TimesClicked;
+
+            }
+
+
+        }
+        function startTimer() {
+            e++;
+            let timeLeft = selectedTime;
+            timerDiv.innerText = timeLeft;
+            timer = setInterval(function () {
+                timeLeft--;
+                timerDiv.innerText = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    e = 0;
+                    if (Number(TimesClicked / selectedTime) > Number(highScore)) {
+                        console.log('hi');
+                        console.log(highScore);
+                        console.log(TimesClicked);
+                        highScore = Number(TimesClicked) / Number(selectedTime);
+                        console.log(highScore);
+                        highScoreDisplay.innerText = String(highScore);
+                        localStorage.setItem('highScore', JSON.stringify(highScore));
+                    }
+
+
+                    Modal.style.display = 'block';
+                    document.querySelector('.jsModalClicks').innerText = `${TimesClicked / selectedTime} CPS`;
+
+
+                    document.querySelector('.close').onclick = function (event) {
+                        Modal.style.display = "none";
+                        resetGame()
+
+
+                    }
+
+                }
+            }, 1000);
+        }
+        function resetGame() {
+            e = 0;
+            playStart.style.display = 'block';
+            TimesClicked = 0;
+            ClickDisplay.innerText = TimesClicked;
+            timerDiv.innerText = selectedTime;
+
+        }
+    </script>
+</body>
+
+</html>
